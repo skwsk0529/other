@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS BPOサービス | カスタマーサクセスの実行力をアウトソース</title>
+  <meta name="description" content="AIだけでは完結しない顧客対応を、直販現場で培ったCSのプロが代行。お客様との打ち合わせ・改善提案・アップセル/クロスセルまで一括対応。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    /* ========== Reset & Base ========== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      color: #333;
+      line-height: 1.8;
+      background: #fff;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
+    ul { list-style: none; }
+
+    /* ========== Utility ========== */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: #8B1A1A;
+      border: 1px solid #8B1A1A;
+      padding: 4px 16px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      font-weight: 900;
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+    .section-title .accent { color: #8B1A1A; }
+    .text-center { text-align: center; }
+
+    /* ========== Header ========== */
+    .header {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 1100px;
+      background: rgba(255,255,255,0.96);
+      border-radius: 999px;
+      padding: 12px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      backdrop-filter: blur(8px);
+    }
+    .header-logo {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #333;
+    }
+    .header-nav { display: flex; gap: 32px; align-items: center; }
+    .header-nav a { font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+    .header-nav a:hover { color: #8B1A1A; }
+    .header-cta {
+      background: #8B1A1A;
+      color: #fff;
+      padding: 8px 24px;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+    .header-cta:hover { background: #6d1414; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #8B1A1A;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* ========== Hero ========== */
+    .hero {
+      padding: 160px 0 80px;
+      background: linear-gradient(135deg, #fdf6f6 0%, #fff 50%, #f8f0f0 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(139,26,26,0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-eyecatch {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #666;
+      margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .hero h1 .brand { color: #8B1A1A; }
+    .hero-sub {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #8B1A1A;
+      margin-bottom: 32px;
+    }
+    .hero-badges {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .hero-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 2px solid #8B1A1A;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #8B1A1A;
+    }
+    .hero-badge .check {
+      width: 20px;
+      height: 20px;
+      background: #8B1A1A;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #8B1A1A;
+      color: #fff;
+      padding: 16px 36px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: all 0.3s;
+      border: 2px solid #8B1A1A;
+    }
+    .btn-primary:hover { background: #6d1414; border-color: #6d1414; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(139,26,26,0.3); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: #8B1A1A;
+      padding: 16px 36px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      border: 2px solid #8B1A1A;
+      transition: all 0.3s;
+    }
+    .btn-secondary:hover { background: #fdf6f6; transform: translateY(-2px); }
+
+    .hero-visual {
+      position: relative;
+      z-index: 1;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 120px);
+      gap: 12px;
+    }
+    .hero-grid-item {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f0e0e0;
+    }
+    .hero-grid-item:nth-child(1) { grid-row: span 2; background: linear-gradient(135deg, #8B1A1A, #c44); }
+    .hero-grid-item:nth-child(2) { background: #e8d8d8; }
+    .hero-grid-item:nth-child(3) { grid-column: span 2; background: linear-gradient(135deg, #b33, #8B1A1A); }
+    .hero-grid-item:nth-child(4) { background: #ddd; }
+    .hero-grid-item:nth-child(5) { grid-column: span 2; background: #e0d0d0; }
+    .hero-grid-icon {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ========== About ========== */
+    .about {
+      padding: 100px 0;
+      background: #fff;
+    }
+    .about-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .about p {
+      font-size: 1.05rem;
+      line-height: 2;
+      color: #555;
+    }
+    .about-highlight {
+      background: linear-gradient(135deg, #8B1A1A, #a33);
+      color: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      margin-top: 40px;
+      font-size: 1.125rem;
+      line-height: 1.9;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-highlight::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: 16px;
+      font-size: 8rem;
+      color: rgba(255,255,255,0.1);
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+    .about-highlight strong { font-weight: 700; }
+
+    /* ========== Pain Points ========== */
+    .pain {
+      padding: 100px 0;
+      background: #faf7f7;
+    }
+    .pain-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .pain-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 28px;
+      text-align: center;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+      transition: transform 0.3s;
+    }
+    .pain-card:hover { transform: translateY(-4px); }
+    .pain-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      background: #f5f0f0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+    .pain-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .pain-card h3 .highlight {
+      color: #8B1A1A;
+      font-weight: 900;
+    }
+    .pain-card p {
+      font-size: 0.875rem;
+      color: #888;
+      line-height: 1.7;
+    }
+
+    /* ========== Solution ========== */
+    .solution {
+      padding: 100px 0;
+      background: linear-gradient(135deg, #8B1A1A 0%, #5a1010 100%);
+      color: #fff;
+    }
+    .solution .section-label { color: #fff; border-color: rgba(255,255,255,0.5); }
+    .solution .section-title { color: #fff; }
+    .solution-subtitle {
+      font-size: 1.125rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 48px;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .solution-box {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 48px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .solution-comparison {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .solution-side h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(255,255,255,0.2);
+    }
+    .solution-side ul li {
+      font-size: 0.95rem;
+      padding: 8px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.6;
+    }
+    .solution-side ul li::before {
+      content: '×';
+      color: rgba(255,255,255,0.5);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .solution-side.ours ul li::before {
+      content: '✓';
+      color: #ffd700;
+    }
+    .solution-arrow {
+      font-size: 2rem;
+      color: rgba(255,255,255,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ========== Service ========== */
+    .service {
+      padding: 100px 0;
+      background: #fff;
+    }
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .service-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 16px;
+      padding: 36px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .service-card:hover {
+      border-color: #8B1A1A;
+      box-shadow: 0 8px 32px rgba(139,26,26,0.1);
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: #8B1A1A;
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-num {
+      display: inline-block;
+      width: 36px;
+      height: 36px;
+      background: #8B1A1A;
+      color: #fff;
+      border-radius: 50%;
+      line-height: 36px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .service-card h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #333;
+    }
+    .service-card p {
+      font-size: 0.875rem;
+      color: #666;
+      line-height: 1.8;
+    }
+    .service-card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+
+    /* ========== Differentiator (AI vs Human) ========== */
+    .differentiator {
+      padding: 100px 0;
+      background: #faf7f7;
+    }
+    .diff-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 48px;
+      align-items: start;
+    }
+    .diff-card {
+      border-radius: 20px;
+      padding: 40px 32px;
+      position: relative;
+    }
+    .diff-card.ai-side {
+      background: #f0f0f0;
+      border: 2px solid #ddd;
+    }
+    .diff-card.human-side {
+      background: linear-gradient(135deg, #fdf6f6, #fff);
+      border: 2px solid #8B1A1A;
+    }
+    .diff-card-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 16px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+    .ai-side .diff-card-label {
+      background: #ddd;
+      color: #666;
+    }
+    .human-side .diff-card-label {
+      background: #8B1A1A;
+      color: #fff;
+    }
+    .diff-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .diff-card ul li {
+      padding: 10px 0;
+      font-size: 0.95rem;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.6;
+    }
+    .diff-card ul li:last-child { border-bottom: none; }
+    .diff-card ul li .icon { flex-shrink: 0; font-size: 1.1rem; }
+    .ai-side ul li .icon { color: #999; }
+    .human-side ul li .icon { color: #8B1A1A; }
+    .diff-bottom {
+      margin-top: 48px;
+      background: linear-gradient(135deg, #8B1A1A, #a33);
+      color: #fff;
+      border-radius: 16px;
+      padding: 32px 40px;
+      text-align: center;
+      font-size: 1.125rem;
+      font-weight: 700;
+      line-height: 1.8;
+    }
+    .diff-bottom span { font-size: 1.375rem; }
+
+    /* ========== Cases ========== */
+    .cases {
+      padding: 100px 0;
+      background: #fff;
+    }
+    .case-list {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      margin-top: 48px;
+    }
+    .case-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 32px;
+      align-items: start;
+      background: #faf7f7;
+      border-radius: 20px;
+      padding: 40px;
+    }
+    .case-badge {
+      background: #fff;
+      border: 2px solid #8B1A1A;
+      border-radius: 8px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #8B1A1A;
+      white-space: nowrap;
+    }
+    .case-content h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .case-flow {
+      display: flex;
+      align-items: stretch;
+      gap: 16px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .case-flow-step {
+      flex: 1;
+      min-width: 180px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+    }
+    .case-flow-step h4 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #8B1A1A;
+      margin-bottom: 8px;
+      display: inline-block;
+      background: #fdf0f0;
+      padding: 2px 10px;
+      border-radius: 4px;
+    }
+    .case-flow-step p {
+      font-size: 0.875rem;
+      color: #555;
+      line-height: 1.7;
+    }
+    .case-flow-arrow {
+      display: flex;
+      align-items: center;
+      color: #8B1A1A;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    /* ========== Flow ========== */
+    .flow {
+      padding: 100px 0;
+      background: #faf7f7;
+    }
+    .flow-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .flow-step {
+      text-align: center;
+      position: relative;
+    }
+    .flow-step::after {
+      content: '→';
+      position: absolute;
+      right: -18px;
+      top: 36px;
+      font-size: 1.25rem;
+      color: #8B1A1A;
+      font-weight: 700;
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-step-num {
+      width: 56px;
+      height: 56px;
+      background: #8B1A1A;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0 auto 16px;
+    }
+    .flow-step h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .flow-step p {
+      font-size: 0.8rem;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    /* ========== CTA ========== */
+    .cta {
+      padding: 80px 0;
+      background: linear-gradient(135deg, #8B1A1A 0%, #5a1010 100%);
+      color: #fff;
+      text-align: center;
+    }
+    .cta h2 {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+    .cta p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 40px;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: #8B1A1A;
+      padding: 16px 40px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: all 0.3s;
+      border: 2px solid #fff;
+    }
+    .btn-white:hover { background: transparent; color: #fff; transform: translateY(-2px); }
+    .btn-outline-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: #fff;
+      padding: 16px 40px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      border: 2px solid rgba(255,255,255,0.5);
+      transition: all 0.3s;
+    }
+    .btn-outline-white:hover { border-color: #fff; background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+    /* ========== FAQ ========== */
+    .faq {
+      padding: 100px 0;
+      background: #fff;
+    }
+    .faq-list {
+      max-width: 800px;
+      margin: 48px auto 0;
+    }
+    .faq-item {
+      border-bottom: 1px solid #eee;
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 24px 0;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: inherit;
+      color: #333;
+      line-height: 1.6;
+    }
+    .faq-question::before {
+      content: 'Q';
+      width: 32px;
+      height: 32px;
+      background: #8B1A1A;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      flex-shrink: 0;
+    }
+    .faq-question::after {
+      content: '+';
+      margin-left: auto;
+      font-size: 1.5rem;
+      color: #8B1A1A;
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+    .faq-item.open .faq-question::after {
+      transform: rotate(45deg);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .faq-answer-inner {
+      padding: 0 0 24px 48px;
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.8;
+    }
+
+    /* ========== Footer ========== */
+    .footer {
+      padding: 48px 0 24px;
+      background: #1a1a1a;
+      color: #aaa;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-logo {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #fff;
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: #aaa;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-copy {
+      width: 100%;
+      text-align: center;
+      font-size: 0.75rem;
+      padding-top: 24px;
+      margin-top: 24px;
+      border-top: 1px solid #333;
+    }
+
+    /* ========== Sticky CTA (Mobile) ========== */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      padding: 12px 16px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+      z-index: 99;
+      gap: 8px;
+    }
+    .sticky-cta a {
+      flex: 1;
+      text-align: center;
+      padding: 14px 8px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 700;
+    }
+
+    /* ========== Responsive ========== */
+    @media (max-width: 1024px) {
+      .hero .container { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { max-width: 500px; margin: 0 auto; }
+      .pain-cards { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+      .service-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
+      .diff-layout { grid-template-columns: 1fr; }
+      .solution-comparison { grid-template-columns: 1fr; gap: 24px; }
+      .solution-arrow { transform: rotate(90deg); }
+      .flow-steps { grid-template-columns: repeat(2, 1fr); }
+      .flow-step:nth-child(2)::after { display: none; }
+    }
+    @media (max-width: 768px) {
+      .header-nav { display: none; }
+      .hamburger { display: flex; }
+      .hero { padding: 120px 0 60px; }
+      .hero-badges { justify-content: center; }
+      .hero-ctas { justify-content: center; }
+      .hero-content { text-align: center; }
+      .hero-grid { grid-template-rows: repeat(3, 80px); }
+      .section-title { font-size: 1.5rem; }
+      .about-highlight { padding: 28px; }
+      .solution-box { padding: 28px; }
+      .case-item { grid-template-columns: 1fr; padding: 28px; }
+      .case-flow { flex-direction: column; }
+      .case-flow-arrow { transform: rotate(90deg); justify-content: center; }
+      .flow-steps { grid-template-columns: 1fr 1fr; }
+      .flow-step::after { display: none; }
+      .sticky-cta { display: flex; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+      body { padding-bottom: 72px; }
+    }
+    @media (max-width: 480px) {
+      .hero-badge { font-size: 0.75rem; padding: 8px 14px; }
+      .flow-steps { grid-template-columns: 1fr; max-width: 280px; margin-left: auto; margin-right: auto; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== Header ===== -->
+  <header class="header">
+    <div class="header-logo">CS BPO</div>
+    <nav class="header-nav">
+      <a href="#about">サービス概要</a>
+      <a href="#service">対応業務</a>
+      <a href="#cases">導入事例</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact" class="header-cta">お問い合わせ</a>
+    </nav>
+    <button class="hamburger" aria-label="メニュー" onclick="document.querySelector('.header-nav').classList.toggle('show')">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <p class="hero-eyecatch">カスタマーサクセスの即戦力なら</p>
+        <h1><span class="brand">CS BPO</span></h1>
+        <p class="hero-sub">CS特化型BPOサービス ─ AIで調べて、人が動く</p>
+        <div class="hero-badges">
+          <div class="hero-badge"><span class="check">✓</span>直販現場のプロが対応</div>
+          <div class="hero-badge"><span class="check">✓</span>顧客対応を丸ごと代行</div>
+          <div class="hero-badge"><span class="check">✓</span>改善提案・アップセルまで</div>
+        </div>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn-primary">✉ お問い合わせ</a>
+          <a href="#contact" class="btn-secondary">📄 資料請求</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-grid">
+          <div class="hero-grid-item"><div class="hero-grid-icon">👤</div></div>
+          <div class="hero-grid-item"></div>
+          <div class="hero-grid-item"><div class="hero-grid-icon">🤝</div></div>
+          <div class="hero-grid-item"></div>
+          <div class="hero-grid-item"><div class="hero-grid-icon">📊</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== About ===== -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-inner text-center">
+        <span class="section-label">ABOUT</span>
+        <h2 class="section-title"><span class="accent">CS BPO</span> とは？</h2>
+        <p>
+          自社の直販事業で培ったカスタマーサクセスのノウハウを、そのまま御社にも提供するBPOサービスです。<br>
+          実際にお客様対応の最前線に立ってきたメンバーが、御社の顧客に対して打ち合わせ・改善提案・アップセル/クロスセルの提案まで一貫して対応します。
+        </p>
+        <div class="about-highlight">
+          <strong>「AIで効率化」─ それだけでは、お客様は動きません。</strong><br><br>
+          AIがどれだけ優れた分析や提案を生成しても、結局はそれを<strong>お客様に伝え、納得いただき、行動を促す人</strong>が必要です。<br>
+          私たちは「AIを使いこなせるCSのプロ」として、調査から実行まで一気通貫でお任せいただけます。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Pain Points ===== -->
+  <section class="pain" id="pain">
+    <div class="container text-center">
+      <span class="section-label">PROBLEM</span>
+      <h2 class="section-title">こんな<span class="accent">お悩み</span>ありませんか？</h2>
+      <div class="pain-cards">
+        <div class="pain-card">
+          <div class="pain-icon">😰</div>
+          <h3>新規契約は増えているが、<br><span class="highlight">CSの採用や体制がボトルネック</span></h3>
+          <p>事業は成長しているのに、顧客対応の人手が足りず、解約率が上がってしまう。</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-icon">🤔</div>
+          <h3>AIツールを導入したが、<br><span class="highlight">結局「人」がいないと回らない</span></h3>
+          <p>AIで分析や提案は自動化できても、お客様への説明や関係構築は人にしかできない。</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-icon">😓</div>
+          <h3>CSに詳しい外注先がおらず、<br><span class="highlight">業務品質に不安がある</span></h3>
+          <p>一般的なBPOではCSの専門知識が不足しており、顧客満足度を維持できない。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Differentiator (AI vs Human) ===== -->
+  <section class="differentiator" id="differentiator">
+    <div class="container text-center">
+      <span class="section-label">WHY US</span>
+      <h2 class="section-title">AIだけでは届かない、<span class="accent">実行力</span>の差</h2>
+      <div class="diff-layout">
+        <div class="diff-card ai-side">
+          <span class="diff-card-label">AIだけの場合</span>
+          <h3>自動化はできるけど…</h3>
+          <ul>
+            <li><span class="icon">△</span>データ分析・レポート生成は可能</li>
+            <li><span class="icon">△</span>テンプレートメールの自動送信</li>
+            <li><span class="icon">×</span>お客様の温度感を汲み取れない</li>
+            <li><span class="icon">×</span>複雑な質問や要望に対応できない</li>
+            <li><span class="icon">×</span>信頼関係の構築ができない</li>
+            <li><span class="icon">×</span>アップセル・クロスセルの交渉は困難</li>
+          </ul>
+        </div>
+        <div class="diff-card human-side">
+          <span class="diff-card-label">CS BPO の場合</span>
+          <h3>AIを活用した「人」が動く</h3>
+          <ul>
+            <li><span class="icon">◎</span>AIで効率的に情報収集・分析</li>
+            <li><span class="icon">◎</span>お客様に合わせた改善提案を実施</li>
+            <li><span class="icon">◎</span>定例ミーティングで信頼関係を構築</li>
+            <li><span class="icon">◎</span>課題を先回りして発見・解決</li>
+            <li><span class="icon">◎</span>適切なタイミングでアップセル提案</li>
+            <li><span class="icon">◎</span>直販現場で培った実績ある対応品質</li>
+          </ul>
+        </div>
+      </div>
+      <div class="diff-bottom">
+        <span>AIが「調べる」。人が「動かす」。</span><br>
+        それが、CS BPOの提供価値です。
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Solution ===== -->
+  <section class="solution" id="solution">
+    <div class="container text-center">
+      <span class="section-label">SOLUTION</span>
+      <h2 class="section-title">その課題、<span style="border:2px solid #fff; padding:2px 12px; border-radius:4px;">CS BPO</span> が<br>解決します</h2>
+      <p class="solution-subtitle">一般的なBPO・外注と、CS BPOの違い</p>
+      <div class="solution-box">
+        <div class="solution-comparison">
+          <div class="solution-side">
+            <h3>一般的なBPO・外注</h3>
+            <ul>
+              <li>CS業務の知見が浅い</li>
+              <li>マニュアル対応しかできない</li>
+              <li>改善提案はスコープ外</li>
+              <li>アップセル・クロスセルに非対応</li>
+              <li>AIを活用できる人材がいない</li>
+            </ul>
+          </div>
+          <div class="solution-arrow">→</div>
+          <div class="solution-side ours">
+            <h3>CS BPO</h3>
+            <ul>
+              <li>直販現場出身のCSプロが対応</li>
+              <li>お客様に合わせた柔軟な対応</li>
+              <li>改善提案を主体的に実施</li>
+              <li>アップセル・クロスセル提案も対応</li>
+              <li>AIを駆使した効率的な業務設計</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Service ===== -->
+  <section class="service" id="service">
+    <div class="container text-center">
+      <span class="section-label">SERVICE</span>
+      <h2 class="section-title">対応可能な<span class="accent">業務範囲</span></h2>
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="service-card-icon">💬</div>
+          <span class="service-num">1</span>
+          <h3>顧客打ち合わせ</h3>
+          <p>定例ミーティングの実施、議事録作成、ネクストアクションの管理まで対応します。</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card-icon">📈</div>
+          <span class="service-num">2</span>
+          <h3>改善提案</h3>
+          <p>利用状況をAIで分析し、お客様の課題に合わせた具体的な改善提案を作成・実施します。</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card-icon">🎯</div>
+          <span class="service-num">3</span>
+          <h3>アップセル・クロスセル</h3>
+          <p>適切なタイミングで追加サービスやプランのご提案を行い、顧客単価の向上に貢献します。</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card-icon">🛡️</div>
+          <span class="service-num">4</span>
+          <h3>解約防止・リテンション</h3>
+          <p>解約兆候の早期発見とフォローアップで、チャーンレートの改善を実現します。</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card-icon">🚀</div>
+          <span class="service-num">5</span>
+          <h3>オンボーディング</h3>
+          <p>新規契約後のセットアップから活用定着まで、スムーズな立ち上がりを支援します。</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card-icon">📊</div>
+          <span class="service-num">6</span>
+          <h3>レポーティング</h3>
+          <p>顧客の利用状況、健康スコア、対応履歴などを定期的にレポートしてご報告します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Cases ===== -->
+  <section class="cases" id="cases">
+    <div class="container text-center">
+      <span class="section-label">CASE STUDY</span>
+      <h2 class="section-title">導入<span class="accent">イメージ</span></h2>
+      <div class="case-list">
+        <div class="case-item">
+          <span class="case-badge">CASE 01</span>
+          <div class="case-content">
+            <h3>SaaS企業 ─ 急成長フェーズのCS体制構築</h3>
+            <div class="case-flow">
+              <div class="case-flow-step">
+                <h4>課題</h4>
+                <p>契約数が急増し、CS担当の採用が追いつかない。既存顧客のフォローが手薄に。</p>
+              </div>
+              <div class="case-flow-arrow">→</div>
+              <div class="case-flow-step">
+                <h4>CS BPO導入</h4>
+                <p>顧客打ち合わせ・改善提案を一括代行。AIで利用データを分析し、提案品質を担保。</p>
+              </div>
+              <div class="case-flow-arrow">→</div>
+              <div class="case-flow-step">
+                <h4>成果</h4>
+                <p>解約率の改善と顧客満足度向上を実現。社内CSチーム立ち上げまでの橋渡しにも。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="case-item">
+          <span class="case-badge">CASE 02</span>
+          <div class="case-content">
+            <h3>BtoB企業 ─ 既存顧客からの売上拡大</h3>
+            <div class="case-flow">
+              <div class="case-flow-step">
+                <h4>課題</h4>
+                <p>既存顧客へのアップセル・クロスセルに手が回らず、新規獲得に偏重していた。</p>
+              </div>
+              <div class="case-flow-arrow">→</div>
+              <div class="case-flow-step">
+                <h4>CS BPO導入</h4>
+                <p>定期的な顧客接点を設計し、利用状況に基づいた追加提案を代行。</p>
+              </div>
+              <div class="case-flow-arrow">→</div>
+              <div class="case-flow-step">
+                <h4>成果</h4>
+                <p>既存顧客からの売上が増加。顧客との関係性も深化し、長期契約へ。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Flow ===== -->
+  <section class="flow" id="flow">
+    <div class="container text-center">
+      <span class="section-label">FLOW</span>
+      <h2 class="section-title">ご利用の<span class="accent">流れ</span></h2>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <h3>お問い合わせ</h3>
+          <p>まずはお気軽にご相談ください。現状の課題をヒアリングします。</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <h3>業務設計</h3>
+          <p>御社の業務フローを理解し、最適なCS体制をご提案します。</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <h3>運用開始</h3>
+          <p>担当チームがアサインされ、顧客対応を開始します。</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">4</div>
+          <h3>改善・最適化</h3>
+          <p>定期的な振り返りで業務品質を継続的に改善します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq" id="faq">
+    <div class="container text-center">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title">よくある<span class="accent">ご質問</span></h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight = a.style.maxHeight ? null : a.scrollHeight+'px';">
+            最低契約期間はありますか？
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">最低3ヶ月からのご契約となります。CS業務は成果が出るまでに一定の立ち上がり期間が必要なため、中長期でのご契約を推奨しています。</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight = a.style.maxHeight ? null : a.scrollHeight+'px';">
+            どのようなツール・SaaSに対応していますか？
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">特定のツールに限定せず、御社がご利用中のCRM・CSツールに合わせて柔軟に対応いたします。Salesforce、HubSpot、Gainsightなど主要ツールの運用経験がございます。</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight = a.style.maxHeight ? null : a.scrollHeight+'px';">
+            自社のCSチームがまだない場合でも利用できますか？
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">はい、もちろんご利用いただけます。CS体制がゼロの状態からでも、業務設計・オンボーディングフロー構築を含めてご支援可能です。将来的に内製化を目指す場合のナレッジ移管もサポートいたします。</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight = a.style.maxHeight ? null : a.scrollHeight+'px';">
+            AIはどのように活用されていますか？
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">お客様の利用データ分析、課題の早期発見、提案資料の作成補助、レポート自動生成などにAIを活用しています。ただし、お客様とのコミュニケーションや提案実行は必ず経験豊富な担当者が行います。「AIで調べて、人が動く」が私たちの基本方針です。</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open'); const a=this.nextElementSibling; a.style.maxHeight = a.style.maxHeight ? null : a.scrollHeight+'px';">
+            アップセル・クロスセルの成果報酬型は可能ですか？
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">基本的には月額固定でのご契約ですが、アップセル・クロスセルの成果に応じたインセンティブ型のプランもご相談可能です。詳しくはお問い合わせください。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta" id="contact">
+    <div class="container">
+      <h2>まずはお気軽にご相談ください</h2>
+      <p>CS体制の課題、現状の運用についてヒアリングし、<br>最適なプランをご提案いたします。</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn-white">✉ お問い合わせ</a>
+        <a href="#" class="btn-outline-white">📄 資料請求</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">CS BPO</div>
+        <div class="footer-links">
+          <a href="#">会社概要</a>
+          <a href="#">プライバシーポリシー</a>
+          <a href="#">利用規約</a>
+          <a href="#contact">お問い合わせ</a>
+        </div>
+        <p class="footer-copy">&copy; 2026 CS BPO. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== Sticky CTA (Mobile) ===== -->
+  <div class="sticky-cta">
+    <a href="#contact" class="btn-primary" style="border-radius:8px;">✉ お問い合わせ</a>
+    <a href="#contact" class="btn-secondary" style="border-radius:8px;">📄 資料請求</a>
+  </div>
+</body>
+</html>
